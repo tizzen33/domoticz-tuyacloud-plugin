@@ -67,7 +67,7 @@ class BasePlugin:
         if response_json.get('responseStatus') == 'error':
           Domoticz.Debug('Connection error.')
           onStop()
-        else
+        else:
           Domoticz.Debug('Connection established.')
           return response_json
 
