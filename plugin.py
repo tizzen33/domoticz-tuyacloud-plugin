@@ -123,7 +123,6 @@ class BasePlugin:
         Domoticz.Debug('Incoming message!' + str(Data))
 
     def onHeartbeat(self):
-        Domoticz.Debug("Heartbeating...")
         self.checkAccessToken()
         
 
