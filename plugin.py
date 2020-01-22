@@ -48,7 +48,7 @@ class BasePlugin:
         Domoticz.Debug("onStart called")
 
         self.userName = Parameters["Username"].strip()
-        self.password = Parameters["Password"].strip())
+        self.password = Parameters["Password"].strip()
         self.countryCode = Parameters["Mode1"].strip()
 
         accessDetails = self.connectTuya(userName, password, countryCode)
