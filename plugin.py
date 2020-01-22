@@ -54,7 +54,7 @@ class BasePlugin:
 
         self.accessDetails = self.connectTuya(self.userName, self.password, self.countryCode)
         
-        self.accessDetails = self.checkAccessToken(self.accessDetails)
+        #self.accessDetails = self.checkAccessToken(self.accessDetails)
         
         self.syncDevices(self.accessDetails.get('access_token'))
         
@@ -103,7 +103,6 @@ class BasePlugin:
                 'refreshToken': response_json.get('refresh_token'),
                 'expireTime': int(time.time()) + response_json.get('expires_in')})
                 Domoticz.Debug('Access token refreshed')
-                return accessDetails
     
     def onStop(self):
         Domoticz.Debug("onStop called")
