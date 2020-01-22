@@ -29,6 +29,8 @@
 """
 
 import Domoticz
+import requests
+import json
 
 base_url = "https://px1.tuyaeu.com/{}"
 
