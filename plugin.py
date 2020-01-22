@@ -104,7 +104,7 @@ class BasePlugin:
                 'expireTime': int(time.time()) + response_json.get('expires_in')})
                 Domoticz.Debug('Access token refreshed')
         else:
-            Domoticz.Debug('Access token still valid for {expTime}'.format(expTime=expireTime))
+            Domoticz.Debug('Access token still valid for {expTime}'.format(expTime=self.accessDetails.get('expires_in')))
     
     def onStop(self):
         Domoticz.Debug("onStop called")
