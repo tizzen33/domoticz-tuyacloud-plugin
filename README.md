@@ -3,5 +3,5 @@ Connects Domoticz to the Tuya Cloud
 
 Prerequisites
 - Functioning Domoticz installation
-- >= Python3.5 installed on your system
+- Python 3.5 or higher installed on your system
 - Python packages: requests
