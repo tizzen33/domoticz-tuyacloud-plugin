@@ -54,7 +54,7 @@ class BasePlugin:
 
         self.accessDetails = self.connectTuya(self.userName, self.password, self.countryCode)
         
-        #self.accessDetails = self.checkAccessToken(self.accessDetails)
+        #self.accessDetails = self.checkAccessToken()
         
         self.syncDevices(self.accessDetails.get('access_token'))
         
@@ -84,10 +84,10 @@ class BasePlugin:
         response_json = response.json()
         Domoticz.Debug('Devices found:{devices}'.format(devices=json.dumps(response_json)))   
         
-    def checkAccessToken(self, accessDetails):
-        accessToken = accessDetails.get('access_token')
-        refreshToken = accessDetails.get('refresh_token')
-        expireTime = int(time.time()) + accessDetails.get('expires_in')
+    def checkAccessToken(self):
+        accessToken = self.accessDetails.get('access_token')
+        refreshToken = self.accessDetails.get('refresh_token')
+        expireTime = int(time.time()) + self.accessDetails.get('expires_in')
         
         if expireTime <= 86400 + int(time.time()):
             data = "grant_type=refresh_token&refresh_token="+refreshToken
@@ -98,7 +98,7 @@ class BasePlugin:
             if response_json.get('responseStatus') == 'error':
                 Domoticz.Debug('Failed to refresh token')
             else:
-                accessDetails.update({
+                self.accessDetails.update({
                 'accessToken': response_json.get('access_token'),
                 'refreshToken': response_json.get('refresh_token'),
                 'expireTime': int(time.time()) + response_json.get('expires_in')})
@@ -121,7 +121,7 @@ class BasePlugin:
 
     def onHeartbeat(self):
         Domoticz.Debug("Heartbeating...")
-        self.checkAccessToken(self.accessDetails)
+        self.checkAccessToken()
         
 
 global _plugin
