@@ -37,6 +37,7 @@ base_url = "https://px1.tuyaeu.com/{}"
 
 class BasePlugin:
     accessDetails = {}
+    devices = {}
 
     def onStart(self):
         self.debugging = Parameters["Mode2"]
@@ -82,7 +83,9 @@ class BasePlugin:
         data = {'header': header,'payload': payload}
         response = requests.post(base_url.format("homeassistant/skill"),json=data)
         response_json = response.json()
-        Domoticz.Debug('Devices found:{devices}'.format(devices=json.dumps(response_json)))   
+        if response_json and response_json["header"]["code"] == "SUCCESS":
+            devices = response_json["payload"]["devices"]
+            Domoticz.Debug('Devices found:{devices}'.format(devices=json.dumps(devices)))
         
     def checkAccessToken(self):
         accessToken = self.accessDetails.get('access_token')
