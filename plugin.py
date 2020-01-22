@@ -35,9 +35,7 @@ import json
 base_url = "https://px1.tuyaeu.com/{}"
 
 class BasePlugin:
-    domoticzDevicesByName = None
-    domoticzDevicesById = None
-    linkedDevices = None
+    accessDetails = {}
 
     def onStart(self):
         self.debugging = Parameters["Mode2"]
@@ -54,6 +52,8 @@ class BasePlugin:
         self.countryCode = Parameters["Mode1"].strip()
 
         self.accessDetails = self.connectTuya(self.userName, self.password, self.countryCode)
+        
+        self.accessDetails = self.checkAccessToken(self.accessDetails)
         
         self.syncDevices(self.accessDetails.get('access_token'))
         
@@ -82,7 +82,28 @@ class BasePlugin:
         response = requests.post(base_url.format("homeassistant/skill"),json=data)
         response_json = response.json()
         Domoticz.Debug('Devices found:{devices}'.format(devices=json.dumps(response_json)))   
- 
+        
+    def checkAccessToken(self, accessDetails):
+        accessToken = accessDetails.get('access_token')
+        refreshToken = accessDetails.get('refresh_token')
+        expireTime = int(time.time()) + accessDetails.get('expires_in')
+        
+        if expireTime <= 86400 + int(time.time()):
+            data = "grant_type=refresh_token&refresh_token="+refreshToken
+            response = requests.get(
+                (base_url.format("homeassistant/access.do"))
+                + "?" + data)
+            response_json = response.json()
+            if response_json.get('responseStatus') == 'error':
+                Domoticz.Debug('Failed to refresh token')
+            else:
+                accessDetails.update({
+                'accessToken': response_json.get('access_token'),
+                'refreshToken': response_json.get('refresh_token'),
+                'expireTime': int(time.time()) + response_json.get('expires_in')}
+                Domoticz.Debug('Access token refreshed')
+                return accessDetails
+    
     def onStop(self):
         Domoticz.Debug("onStop called")
 
@@ -100,6 +121,8 @@ class BasePlugin:
 
     def onHeartbeat(self):
         Domoticz.Debug("Heartbeating...")
+        checkAccessToken(self.accessDetails)
+        
 
 global _plugin
 _plugin = BasePlugin()
