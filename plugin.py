@@ -100,7 +100,7 @@ class BasePlugin:
                 accessDetails.update({
                 'accessToken': response_json.get('access_token'),
                 'refreshToken': response_json.get('refresh_token'),
-                'expireTime': int(time.time()) + response_json.get('expires_in')}
+                'expireTime': int(time.time()) + response_json.get('expires_in')})
                 Domoticz.Debug('Access token refreshed')
                 return accessDetails
     
