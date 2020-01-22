@@ -31,6 +31,7 @@
 import Domoticz
 import requests
 import json
+import time
 
 base_url = "https://px1.tuyaeu.com/{}"
 
@@ -121,7 +122,7 @@ class BasePlugin:
 
     def onHeartbeat(self):
         Domoticz.Debug("Heartbeating...")
-        checkAccessToken(self.accessDetails)
+        self.checkAccessToken(self.accessDetails)
         
 
 global _plugin
