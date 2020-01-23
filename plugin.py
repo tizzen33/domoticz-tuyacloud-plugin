@@ -56,6 +56,8 @@ class BasePlugin:
 
         self.accessDetails = self.connectTuya(self.userName, self.password, self.countryCode)
         
+        Domoticz.Debug(self.Devices)
+        
         self.syncDevices(self.accessDetails.get('access_token'))
         
         Domoticz.Debug('Tuya Cloud devices initialized.')
