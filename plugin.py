@@ -130,13 +130,17 @@ class BasePlugin:
         Domoticz.Debug("onStop called")
 
     def onCommand(self, Unit, Command, Level, Color):
+        commands = {'On': {'comm': 'turnOnOff', 'value': 1}, 'Off': {'comm': 'turnOnOff', 'value': 0}}
         headers = {'Content-Type': 'application/json'}
-        header = {'name': '?', 'namespace': 'control', 'payloadVersion': 1}
-        payload = {'accessToken': self.accessDetails.get('access_token'), 'devId': Unit.DevID}
+        header = {'name': commands[Command]["comm"], 'namespace': 'control', 'payloadVersion': 1}
+        payload = {'accessToken': self.accessDetails.get('access_token'), 'devId': Unit.DevID, 'value': commands[Command]["value"]}
         data = {'header': header,'payload': payload}
         response = requests.post(base_url.format("homeassistant/skill"),json=data)
         response_json = response.json()
-        Domoticz.Debug("onCommand: " + Command + ", level (" + str(Level) + ") Color:" + Color)
+        if response_json['header']['code'] == 'SUCCESS':
+            Domoticz.Debug("onCommand: " + Command + ", level (" + str(Level) + ") Color:" + Color)
+        else:
+            Domoticz.Debug("Command failed: " + commands[Command]["comm"] + ", value: " + commands[Command]["value"])
 
     def onConnect(self, Connection, Status, Description):
         Domoticz.Debug("onConnect called")
