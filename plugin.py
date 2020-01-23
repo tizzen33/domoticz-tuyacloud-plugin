@@ -133,7 +133,7 @@ class BasePlugin:
         commands = {'On': {'comm': 'turnOnOff', 'value': 1}, 'Off': {'comm': 'turnOnOff', 'value': 0}}
         headers = {'Content-Type': 'application/json'}
         header = {'name': commands[Command]["comm"], 'namespace': 'control', 'payloadVersion': 1}
-        payload = {'accessToken': self.accessDetails.get('access_token'), 'devId': Device[Unit].DeviceId, 'value': commands[Command]["value"]}
+        payload = {'accessToken': self.accessDetails.get('access_token'), 'devId': Devices[Unit].DeviceId, 'value': commands[Command]["value"]}
         data = {'header': header,'payload': payload}
         response = requests.post(base_url.format("homeassistant/skill"),json=data)
         response_json = response.json()
