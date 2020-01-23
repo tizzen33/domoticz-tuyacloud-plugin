@@ -57,7 +57,7 @@ class BasePlugin:
 
         self.accessDetails = self.connectTuya(self.userName, self.password, self.countryCode)
         
-        self.syncDevices(self.accessDetails.get('access_token'))
+        self.syncDevices()
         
         Domoticz.Debug('Tuya Cloud devices initialized.')
         
@@ -75,11 +75,11 @@ class BasePlugin:
           Domoticz.Debug('Connection established.')
           return response_json
 
-    def syncDevices(self, accessToken):
+    def syncDevices(self):
         Domoticz.Debug('Getting devices ...')
         headers = {'Content-Type': 'application/json'}
         header = {'name': 'Discovery', 'namespace': 'discovery', 'payloadVersion': 1}
-        payload = {'accessToken': accessToken}
+        payload = {'accessToken': self.accessDetails.get('access_token')}
         data = {'header': header,'payload': payload}
         response = requests.post(base_url.format("homeassistant/skill"),json=data)
         response_json = response.json()
@@ -129,7 +129,7 @@ class BasePlugin:
     def updateDevices(self):
         headers = {'Content-Type': 'application/json'}
         header = {'name': 'QueryDevice', 'namespace': 'query', 'payloadVersion': 1}
-        payload = {'accessToken': accessToken}
+        payload = {'accessToken': self.accessDetails.get('access_token')}
         for Device in Devices:
             payload["devId"] = Device[Unit].DeviceID
             data = {'header': header,'payload': payload}
