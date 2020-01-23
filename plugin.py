@@ -86,7 +86,7 @@ class BasePlugin:
         response_json = response.json()
         if response_json and response_json["header"]["code"] == "SUCCESS":
             tuya_devices = response_json["payload"]["devices"]
-            Domoticz.Debug('Devices found:{devices}'.format(devices=json.dumps(devices)))
+            Domoticz.Debug('Devices found:{devices}'.format(devices=json.dumps(tuya_devices)))
             for tuya_device in tuya_devices:
                 createDevice = True
                 maxUnit = 1
