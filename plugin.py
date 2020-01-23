@@ -85,11 +85,12 @@ class BasePlugin:
         if response_json and response_json["header"]["code"] == "SUCCESS":
             devices = response_json["payload"]["devices"]
             Domoticz.Debug('Devices found:{devices}'.format(devices=json.dumps(devices)))
-            
             for device in devices:
                 createDevice = True
                 maxUnit = 1
+                Domoticz.Debug('Looping through tuya devices')
                 for Device in Devices:
+                        Domoticz.Debug('Looping through Domoticz Devices')
                         if (Devices[Device].Unit > maxUnit): maxUnit = Devices[Device].Unit
                         if (Devices[Device].DeviceID.find(device["id"]) >= 0):
                             createDomoticzDevice = False
@@ -120,8 +121,8 @@ class BasePlugin:
                 'refreshToken': response_json.get('refresh_token'),
                 'expireTime': int(time.time()) + response_json.get('expires_in')})
                 Domoticz.Debug('Access token refreshed')
-        else:
-            Domoticz.Debug('Access token still valid for {expTime}'.format(expTime=self.accessDetails.get('expires_in')))
+        #else:
+            #Domoticz.Debug('Access token still valid for {expTime}'.format(expTime=self.accessDetails.get('expires_in')))
     
     def onStop(self):
         Domoticz.Debug("onStop called")
