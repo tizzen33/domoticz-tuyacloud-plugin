@@ -137,6 +137,7 @@ class BasePlugin:
             response_json = response.json()
             if response_json and response_json["header"]["code"] != "SUCCESS":
                 Domoticz.Debug('Device status update failed')
+                Domoticz.Debug(json.dumps(response_json))
             else:
                 Domoticz.Debug('Device ' + Devices[Device].Name + ' status updated')
             
