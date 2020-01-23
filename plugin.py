@@ -83,22 +83,22 @@ class BasePlugin:
         response = requests.post(base_url.format("homeassistant/skill"),json=data)
         response_json = response.json()
         if response_json and response_json["header"]["code"] == "SUCCESS":
-            devices = response_json["payload"]["devices"]
+            tuya_devices = response_json["payload"]["devices"]
             Domoticz.Debug('Devices found:{devices}'.format(devices=json.dumps(devices)))
-            for device in devices:
+            for tuya_device in tuya_devices:
                 createDevice = True
                 maxUnit = 1
                 Domoticz.Debug('Looping through tuya devices')
                 for Device in Devices:
                         Domoticz.Debug('Looping through Domoticz Devices')
                         if (Devices[Device].Unit > maxUnit): maxUnit = Devices[Device].Unit
-                        if (Devices[Device].DeviceID.find(device["id"]) >= 0):
+                        if (Devices[Device].DeviceID.find(tuya_device["id"]) >= 0):
                             createDomoticzDevice = False
                             Domoticz.Debug('Device with identifier {id} already exists.'.format(id=device["id"]))
                             break
                         if (createDomoticzDevice):
-                            Domoticz.Device(Name=device["name"],Unit=maxUnit+1,TypeName=self.deviceTypes[device["ha_type"]],DeviceID=device["id"]).Create()
-                            Domoticz.Debug('Creating a {type} device with identifier {id}'.format(type=device["ha_type"],id=device["id"]))
+                            Domoticz.Device(Name=tuya_device["name"],Unit=maxUnit+1,TypeName=self.deviceTypes[tuya_device["ha_type"]],DeviceID=tuya_device["id"]).Create()
+                            Domoticz.Debug('Creating a {type} device with identifier {id}'.format(type=tuya_device["ha_type"],id=tuya_device["id"]))
         else:
             Domoticz.Debug('Device synchronization failed')
         
