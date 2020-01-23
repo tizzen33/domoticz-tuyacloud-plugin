@@ -34,6 +34,7 @@ import json
 import time
 
 base_url = "https://px1.tuyaeu.com/{}"
+device_types = {'switch': 'Switch'}
 
 class BasePlugin:
     accessDetails = {}
@@ -84,8 +85,19 @@ class BasePlugin:
         if response_json and response_json["header"]["code"] == "SUCCESS":
             devices = response_json["payload"]["devices"]
             Domoticz.Debug('Devices found:{devices}'.format(devices=json.dumps(devices)))
+            
             for device in devices:
-                Domoticz.Debug('Creating a {type} device with identifier {id}'.format(type=device["ha_type"],id=device["id"]))
+                createDevice = True
+                maxUnit = 1
+                for Device in Devices:
+                        if (Devices[Device].Unit > maxUnit): maxUnit = Devices[Device].Unit
+                        if (Devices[Device].DeviceID.find(device["id"]) >= 0):
+                            createDomoticzDevice = False
+                            Domoticz.Debug('Device with identifier {id} already exists.'.format(id=device["id"]))
+                            break
+                        if (createDomoticzDevice)
+                            Domoticz.Device(Name=device["name"],Unit=maxUnit+1,TypeName=self.deviceTypes[device["ha_type"]]),DeviceID=device["id"]).Create()
+                            Domoticz.Debug('Creating a {type} device with identifier {id}'.format(type=device["ha_type"],id=device["id"]))
         else:
             Domoticz.Debug('Device synchronization failed')
         
