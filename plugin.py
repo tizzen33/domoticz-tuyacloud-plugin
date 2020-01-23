@@ -49,8 +49,6 @@ class BasePlugin:
             Domoticz.Debugging(2)
 
         Domoticz.Debug('onStart called')
-        
-        Domoticz.Debug('Domoticz Devices: {}'.format(Domoticz.Devices))
 
         self.userName = Parameters["Username"].strip()
         self.password = Parameters["Password"].strip()
