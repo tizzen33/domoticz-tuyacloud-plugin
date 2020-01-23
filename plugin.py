@@ -96,7 +96,7 @@ class BasePlugin:
                             if (Devices[Device].Unit > maxUnit): maxUnit = Devices[Device].Unit
                             if (Devices[Device].DeviceID.find(tuya_device["id"]) >= 0):
                                 createDomoticzDevice = False
-                                Domoticz.Debug('Device with identifier {id} already exists.'.format(id=device["id"]))
+                                Domoticz.Debug('Device with identifier {id} already exists.'.format(id=tuya_device["id"]))
                                 break
                 if (createDomoticzDevice):
                     Domoticz.Device(Name=tuya_device["name"],Unit=maxUnit+1,TypeName=self.device_types[tuya_device["ha_type"]]["type"],Image=self.device_types[tuya_device["ha_type"]]["image"],DeviceID=tuya_device["id"]).Create()
