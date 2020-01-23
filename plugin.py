@@ -85,7 +85,7 @@ class BasePlugin:
             devices = response_json["payload"]["devices"]
             Domoticz.Debug('Devices found:{devices}'.format(devices=json.dumps(devices)))
             for device in devices:
-                Domoticz.Debug('Creating a {type} device with identifier {id}'.format(type=device["ha_type],id=device["id"]))
+                Domoticz.Debug('Creating a {type} device with identifier {id}'.format(type=device["ha_type"],id=device["id"]))
         else:
             Domoticz.Debug('Device synchronization failed')
         
