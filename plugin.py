@@ -90,13 +90,13 @@ class BasePlugin:
                 maxUnit = 1
                 Domoticz.Debug('Looping through tuya devices')
                 if (not Devices):
-                for Device in Devices:
-                        Domoticz.Debug('Looping through Domoticz Devices')
-                        if (Devices[Device].Unit > maxUnit): maxUnit = Devices[Device].Unit
-                        if (Devices[Device].DeviceID.find(tuya_device["id"]) >= 0):
-                            createDomoticzDevice = False
-                            Domoticz.Debug('Device with identifier {id} already exists.'.format(id=device["id"]))
-                            break
+                    for Device in Devices:
+                            Domoticz.Debug('Looping through Domoticz Devices')
+                            if (Devices[Device].Unit > maxUnit): maxUnit = Devices[Device].Unit
+                            if (Devices[Device].DeviceID.find(tuya_device["id"]) >= 0):
+                                createDomoticzDevice = False
+                                Domoticz.Debug('Device with identifier {id} already exists.'.format(id=device["id"]))
+                                break
                 if (createDomoticzDevice):
                     Domoticz.Device(Name=tuya_device["name"],Unit=maxUnit+1,TypeName=self.deviceTypes[tuya_device["ha_type"]],DeviceID=tuya_device["id"]).Create()
                     Domoticz.Debug('Creating a {type} device with identifier {id}'.format(type=tuya_device["ha_type"],id=tuya_device["id"]))
