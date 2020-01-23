@@ -89,7 +89,7 @@ class BasePlugin:
                 createDevice = True
                 maxUnit = 1
                 Domoticz.Debug('Looping through tuya devices')
-                if (not Devices):
+                if (Devices):
                     for Device in Devices:
                             Domoticz.Debug('Looping through Domoticz Devices')
                             if (Devices[Device].Unit > maxUnit): maxUnit = Devices[Device].Unit
