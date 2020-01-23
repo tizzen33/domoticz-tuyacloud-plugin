@@ -39,7 +39,7 @@ base_url = "https://px1.tuyaeu.com/{}"
 class BasePlugin:
     accessDetails = {}
     devices = {}
-    device_types = {'switch': 'Switch'}
+    device_types = {'switch': {'type': 'Switch','image': 1}}
 
     def onStart(self):
         self.debugging = Parameters["Mode2"]
@@ -99,7 +99,7 @@ class BasePlugin:
                                 Domoticz.Debug('Device with identifier {id} already exists.'.format(id=device["id"]))
                                 break
                 if (createDomoticzDevice):
-                    Domoticz.Device(Name=tuya_device["name"],Unit=maxUnit+1,TypeName=self.device_types[tuya_device["ha_type"]],DeviceID=tuya_device["id"]).Create()
+                    Domoticz.Device(Name=tuya_device["name"],Unit=maxUnit+1,TypeName=self.device_types[tuya_device["ha_type"]]["type"],Image=self.device_types[tuya_device["ha_type"]]["image"],DeviceID=tuya_device["id"]).Create()
                     Domoticz.Debug('Creating a {type} device with identifier {id}'.format(type=tuya_device["ha_type"],id=tuya_device["id"]))
         else:
             Domoticz.Debug('Device synchronization failed')
