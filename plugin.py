@@ -98,7 +98,7 @@ class BasePlugin:
                                 Domoticz.Debug('Device with identifier {id} already exists.'.format(id=device["id"]))
                                 break
                 if (createDomoticzDevice):
-                    Domoticz.Device(Name=tuya_device["name"],Unit=maxUnit+1,TypeName=self.deviceTypes[tuya_device["ha_type"]],DeviceID=tuya_device["id"]).Create()
+                    Domoticz.Device(Name=tuya_device["name"],Unit=maxUnit+1,TypeName=self.device_types[tuya_device["ha_type"]],DeviceID=tuya_device["id"]).Create()
                     Domoticz.Debug('Creating a {type} device with identifier {id}'.format(type=tuya_device["ha_type"],id=tuya_device["id"]))
         else:
             Domoticz.Debug('Device synchronization failed')
