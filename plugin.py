@@ -138,7 +138,7 @@ class BasePlugin:
             if response_json and response_json["header"]["code"] != "SUCCESS":
                 Domoticz.Debug('Device status update failed')
             else:
-                Domoticz.Debug('Device ' + Devices[Device].Name + ' status updated to ' + response_json["payload"]["data"]["state"])
+                Domoticz.Debug('Device ' + Devices[Device].Name + ' status updated to ' + str(response_json["payload"]["data"]["state"]))
             
     def onStop(self):
         Domoticz.Debug("onStop called")
