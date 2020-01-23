@@ -86,7 +86,7 @@ class BasePlugin:
             tuya_devices = response_json["payload"]["devices"]
             Domoticz.Debug('Devices found:{devices}'.format(devices=json.dumps(tuya_devices)))
             for tuya_device in tuya_devices:
-                createDevice = True
+                createDomoticzDevice = True
                 maxUnit = 1
                 Domoticz.Debug('Looping through tuya devices')
                 if (Devices):
