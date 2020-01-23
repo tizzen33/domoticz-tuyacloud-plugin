@@ -48,7 +48,7 @@ class BasePlugin:
             Domoticz.Debugging(2 + 4 + 8 + 16 + 64)
         if self.debugging == "Debug":
             Domoticz.Debugging(2)
-
+        Domoticz.Heartbeat(30)
         Domoticz.Debug('onStart called')
 
         self.userName = Parameters["Username"].strip()
@@ -135,7 +135,6 @@ class BasePlugin:
             data = {'header': header,'payload': payload}
             response = requests.post(base_url.format("homeassistant/skill"),json=data)
             response_json = response.json()
-            {"header": {"payloadVersion": 1, "code": "SUCCESS"}, "payload": {"data": {"state": false, "online": true}}}
             if response_json and response_json["header"]["code"] != "SUCCESS":
                 Domoticz.Debug('Device status update failed')
             else:
