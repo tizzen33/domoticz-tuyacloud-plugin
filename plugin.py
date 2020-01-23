@@ -95,7 +95,7 @@ class BasePlugin:
                             createDomoticzDevice = False
                             Domoticz.Debug('Device with identifier {id} already exists.'.format(id=device["id"]))
                             break
-                        if (createDomoticzDevice)
+                        if (createDomoticzDevice):
                             Domoticz.Device(Name=device["name"],Unit=maxUnit+1,TypeName=self.deviceTypes[device["ha_type"]]),DeviceID=device["id"]).Create()
                             Domoticz.Debug('Creating a {type} device with identifier {id}'.format(type=device["ha_type"],id=device["id"]))
         else:
