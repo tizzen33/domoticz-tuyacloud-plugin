@@ -130,6 +130,12 @@ class BasePlugin:
         Domoticz.Debug("onStop called")
 
     def onCommand(self, Unit, Command, Level, Color):
+        headers = {'Content-Type': 'application/json'}
+        header = {'name': '?', 'namespace': 'control', 'payloadVersion': 1}
+        payload = {'accessToken': self.accessDetails.get('access_token'), 'devId': Unit.DevID}
+        data = {'header': header,'payload': payload}
+        response = requests.post(base_url.format("homeassistant/skill"),json=data)
+        response_json = response.json()
         Domoticz.Debug("onCommand: " + Command + ", level (" + str(Level) + ") Color:" + Color)
 
     def onConnect(self, Connection, Status, Description):
