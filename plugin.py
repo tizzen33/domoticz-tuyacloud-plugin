@@ -34,11 +34,12 @@ import json
 import time
 
 base_url = "https://px1.tuyaeu.com/{}"
-device_types = {'switch': 'Switch'}
+
 
 class BasePlugin:
     accessDetails = {}
     devices = {}
+    device_types = {'switch': 'Switch'}
 
     def onStart(self):
         self.debugging = Parameters["Mode2"]
