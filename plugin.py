@@ -139,6 +139,7 @@ class BasePlugin:
         response_json = response.json()
         if response_json['header']['code'] == 'SUCCESS':
             Domoticz.Debug("onCommand: " + Command + ", level (" + str(Level) + ") Color:" + Color)
+            Devices[Unit].Update(nvalue = commands[Command]["value"])
         else:
             Domoticz.Debug("Command failed: " + commands[Command]["comm"] + ", value: " + commands[Command]["value"])
 
