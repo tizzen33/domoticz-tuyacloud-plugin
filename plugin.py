@@ -131,14 +131,14 @@ class BasePlugin:
         header = {'name': 'QueryDevice', 'namespace': 'query', 'payloadVersion': 1}
         payload = {'accessToken': self.accessDetails.get('access_token')}
         for Device in Devices:
-            payload["devId"] = Device[Unit].DeviceID
+            payload["devId"] = Devices[Device].DeviceID
             data = {'header': header,'payload': payload}
             response = requests.post(base_url.format("homeassistant/skill"),json=data)
             response_json = response.json()
             if response_json and response_json["header"]["code"] != "SUCCESS":
                 Domoticz.Debug('Device status update failed')
             else:
-                Domoticz.Debug('Device ' + Device[Unit].Name + ' status updated')
+                Domoticz.Debug('Device ' + Devices[Device].Name + ' status updated')
             
     def onStop(self):
         Domoticz.Debug("onStop called")
