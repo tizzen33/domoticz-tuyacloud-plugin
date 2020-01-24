@@ -1,6 +1,6 @@
 # domoticz-tuyacloud-plugin
 This Domoticz plugins creates a connection to the Tuya Cloud, imports devices of type 'switch' and lets you control these devices.
-* This is a first draft and works fine for my single device. This will not work for lights or other equipment *
+> This is a first draft and works fine for my single device. This will not work for lights or other equipment
 
 ## Prerequisites
 - Functioning Domoticz installation
