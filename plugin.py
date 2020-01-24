@@ -99,7 +99,7 @@ class BasePlugin:
                                 createDomoticzDevice = False
                                 Domoticz.Debug('Device with identifier {id} already exists.'.format(id=tuya_device["id"]))
                                 break
-                if (createDomoticzDevice && tuya_device["ha_type"] == "switch"):
+                if (createDomoticzDevice and tuya_device["ha_type"] == "switch"):
                     Domoticz.Device(Name=tuya_device["name"],Unit=maxUnit+1,TypeName=self.device_types[tuya_device["ha_type"]]["type"],Image=self.device_types[tuya_device["ha_type"]]["image"],DeviceID=tuya_device["id"]).Create()
                     Domoticz.Debug('Creating a {type} device with identifier {id}'.format(type=tuya_device["ha_type"],id=tuya_device["id"]))
         else:
