@@ -4,7 +4,7 @@
         <h2>Tuya Cloud plugin</h2><br/>
         <h3>Features</h3>
         <ul style="list-style-type:square">
-            <li>This plugin gets all devices available in your Tuya app</li>
+            <li>This plugin imports devices available in your Tuya app</li>
             <li>If you are using a rebranded app like 'LSC Smart Connect', remove your devices and add them again in the Tuya app.</li>
             <li>Login with your e-mail address, password and country code (e.g. 32 for Belgium)</li>
         </ul>
@@ -99,7 +99,7 @@ class BasePlugin:
                                 createDomoticzDevice = False
                                 Domoticz.Debug('Device with identifier {id} already exists.'.format(id=tuya_device["id"]))
                                 break
-                if (createDomoticzDevice):
+                if (createDomoticzDevice && tuya_device["ha_type"] == "switch"):
                     Domoticz.Device(Name=tuya_device["name"],Unit=maxUnit+1,TypeName=self.device_types[tuya_device["ha_type"]]["type"],Image=self.device_types[tuya_device["ha_type"]]["image"],DeviceID=tuya_device["id"]).Create()
                     Domoticz.Debug('Creating a {type} device with identifier {id}'.format(type=tuya_device["ha_type"],id=tuya_device["id"]))
         else:
