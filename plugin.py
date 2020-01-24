@@ -142,7 +142,7 @@ class BasePlugin:
             else:
                 Domoticz.Debug('Tuya state: ' + str(response_json["payload"]["data"]["state"]))
                 Domoticz.Debug('Domoticz state: ' + Devices[Unit].nValue)
-                Domoticz.Debug('State value true: ' + states["true"] + ' , false: ' + states["false"])
+                Domoticz.Debug('State value true: ' + str(states["true"]) + ' , false: ' + str(states["false"]))
             
     def onStop(self):
         Domoticz.Debug("onStop called")
