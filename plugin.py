@@ -138,8 +138,10 @@ class BasePlugin:
             if response_json and response_json["header"]["code"] != "SUCCESS":
                 Domoticz.Debug('Device status update failed')
             else:
-                states = {'true': 1, 'false': 0}
-                Devices[Unit].Update(nValue = states[response_json["payload"]["data"]["state"]], str(states[response_json["payload"]["data"]["state"]]))
+                if(response_json["payload"]["data"]["state"]):
+                    Devices[Unit].Update(nValue = 1, str(1))
+                else:
+                    Devices[Unit].Update(nValue = 0, str(0))
                 Domoticz.Debug('Device ' + Devices[Device].Name + ' status updated to ' + str(response_json["payload"]["data"]["state"]))
             
     def onStop(self):
