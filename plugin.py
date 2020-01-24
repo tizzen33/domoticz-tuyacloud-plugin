@@ -141,7 +141,7 @@ class BasePlugin:
                 Domoticz.Debug('Device status update failed')
             else:
                 if(Devices[Unit].nValue != states[response_json["payload"]["data"]["state"]]):
-                    Devices[Unit].Update(nValue = states[str(response_json["payload"]["data"]["state"])], sValue = str(states[str(response_json["payload"]["data"]["state"]])))
+                    Devices[Unit].Update(nValue = states[str(response_json["payload"]["data"]["state"])], sValue = str(states[str(response_json["payload"]["data"]["state"])]))
                     Domoticz.Debug('Device ' + Devices[Unit].Name + ' status updated to ' + str(response_json["payload"]["data"]["state"]))
 
             
