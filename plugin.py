@@ -128,7 +128,7 @@ class BasePlugin:
             #Domoticz.Debug('Access token still valid for {expTime}'.format(expTime=self.accessDetails.get('expires_in')))
     
     def updateDevices(self):
-        states = {'true': 1, 'false': 0}
+        states = {'True': 1, 'False': 0}
         headers = {'Content-Type': 'application/json'}
         header = {'name': 'QueryDevice', 'namespace': 'query', 'payloadVersion': 1}
         payload = {'accessToken': self.accessDetails.get('access_token')}
@@ -143,6 +143,10 @@ class BasePlugin:
                 Domoticz.Debug('Tuya state: ' + str(response_json["payload"]["data"]["state"]))
                 Domoticz.Debug('Domoticz state: ' + str(Devices[Unit].nValue))
                 Domoticz.Debug('State value true: ' + str(states["true"]) + ' , false: ' + str(states["false"]))
+                if(Devices[Unit].nValue != states[str(response_json["payload"]["data"]["state"])]):
+                    Devices[Unit].Update(nValue = states[str(response_json["payload"]["data"]["state"])], sValue = str(states[str(response_json["payload"]["data"]["state"])]))
+                    Domoticz.Debug('Device ' + Devices[Unit].Name + ' status updated to ' + str(response_json["payload"]["data"]["state"]))
+
             
     def onStop(self):
         Domoticz.Debug("onStop called")
