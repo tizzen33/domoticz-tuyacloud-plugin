@@ -1,5 +1,5 @@
 """
-<plugin key="tuyacloud" name="Tuya Cloud" author="tizzen33" version="1.0.0" wikilink="http://www.github.com/tizzen33/domoticz-tuyacloud">
+<plugin key="tuyacloud" name="Tuya Cloud" author="tizzen33" version="0.1" wikilink="http://www.github.com/tizzen33/domoticz-tuyacloud">
     <description>
         <h2>Tuya Cloud plugin</h2><br/>
         <h3>Features</h3>
