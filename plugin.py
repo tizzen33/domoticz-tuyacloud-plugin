@@ -142,7 +142,7 @@ class BasePlugin:
                     Devices[Unit].Update(nValue = 1, sValue = str(1))
                 else:
                     Devices[Unit].Update(nValue = 0, SValue = str(0))
-                Domoticz.Debug('Device ' + Devices[Device].Name + ' status updated to ' + str(response_json["payload"]["data"]["state"]))
+                Domoticz.Debug('Device ' + Devices[Unit].Name + ' status updated to ' + str(response_json["payload"]["data"]["state"]))
             
     def onStop(self):
         Domoticz.Debug("onStop called")
