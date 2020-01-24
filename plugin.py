@@ -141,7 +141,7 @@ class BasePlugin:
                 if(response_json["payload"]["data"]["state"]):
                     Devices[Unit].Update(nValue = 1, sValue = str(1))
                 else:
-                    Devices[Unit].Update(nValue = 0, SValue = str(0))
+                    Devices[Unit].Update(nValue = 0, sValue = str(0))
                 Domoticz.Debug('Device ' + Devices[Unit].Name + ' status updated to ' + str(response_json["payload"]["data"]["state"]))
             
     def onStop(self):
