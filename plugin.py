@@ -141,7 +141,7 @@ class BasePlugin:
                 Domoticz.Debug('Device status update failed')
             else:
                 Domoticz.Debug('Tuya state: ' + str(response_json["payload"]["data"]["state"]))
-                Domoticz.Debug('Domoticz state: ' + Devices[Unit].nValue)
+                Domoticz.Debug('Domoticz state: ' + str(Devices[Unit].nValue))
                 Domoticz.Debug('State value true: ' + str(states["true"]) + ' , false: ' + str(states["false"]))
             
     def onStop(self):
