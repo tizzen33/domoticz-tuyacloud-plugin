@@ -38,7 +38,6 @@ base_url = "https://px1.tuyaeu.com/{}"
 
 class BasePlugin:
     accessDetails = {}
-    devices = {}
     device_types = {'switch': {'type': 'Switch','image': 1}}
 
     def onStart(self):
@@ -58,6 +57,8 @@ class BasePlugin:
         self.accessDetails = self.connectTuya(self.userName, self.password, self.countryCode)
         
         self.syncDevices()
+        
+        self.updateDevices()
         
         Domoticz.Debug('Tuya Cloud devices initialized.')
         
