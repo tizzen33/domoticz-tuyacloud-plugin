@@ -17,6 +17,12 @@
         <param field="Username" label="Username" width="200px" required="true" default=""/>
         <param field="Password" label="Password" width="30px" required="true" default="" password="true"/>
         <param field="Mode1" label="countryCode" width="150px" required="true"/>
+        <param field="Mode3" label="Platform" width="75px">
+            <options>
+                <option label="Tuya" value="tuya"/>
+                <option label="Smart Life" value="smart_life"/>
+            </options>
+        </param>
         <param field="Mode2" label="Debug" width="75px">
             <options>
                 <option label="Verbose" value="Verbose"/>
@@ -64,7 +70,7 @@ class BasePlugin:
         
     def connectTuya(self, userName, password, countryCode):
         Domoticz.Debug('Starting connection to Tuya Cloud')
-        params = {'userName': userName,'password': password,'countryCode': countryCode,'bizType': '','from': 'tuya'}
+        params = {'userName': userName,'password': password,'countryCode': countryCode,'bizType': Parameters["Mode3"],'from': 'tuya'}
         headers = {'Content-Type': 'application/x-www-form-urlencoded'}
         response = requests.post(base_url.format("homeassistant/auth.do"),headers=headers,params=params)
         response_json = response.json()
