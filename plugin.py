@@ -44,7 +44,7 @@ base_url = "https://px1.tuyaeu.com/{}"
 
 class BasePlugin:
     accessDetails = {}
-    device_types = {'switch': {'type': 'Switch','image': 1}}
+    device_types = {'switch': {'type': 'Switch','image': 1}, 'light': {'type': 'Switch','image': 0}}
 
     def onStart(self):
         self.debugging = Parameters["Mode2"]
@@ -105,7 +105,7 @@ class BasePlugin:
                                 createDomoticzDevice = False
                                 Domoticz.Debug('Device with identifier {id} already exists.'.format(id=tuya_device["id"]))
                                 break
-                if (createDomoticzDevice and tuya_device["ha_type"] == "switch"):
+                if (createDomoticzDevice and (tuya_device["ha_type"] == "light" or tuya_device["ha_type"] == "switch")):
                     Domoticz.Device(Name=tuya_device["name"],Unit=maxUnit+1,TypeName=self.device_types[tuya_device["ha_type"]]["type"],Image=self.device_types[tuya_device["ha_type"]]["image"],DeviceID=tuya_device["id"]).Create()
                     Domoticz.Debug('Creating a {type} device with identifier {id}'.format(type=tuya_device["ha_type"],id=tuya_device["id"]))
         else:
@@ -134,7 +134,7 @@ class BasePlugin:
             #Domoticz.Debug('Access token still valid for {expTime}'.format(expTime=self.accessDetails.get('expires_in')))
     
     def updateDevices(self):
-        states = {'True': 1, 'False': 0}
+        states = {'true': 1, 'false': 0}
         headers = {'Content-Type': 'application/json'}
         header = {'name': 'QueryDevice', 'namespace': 'query', 'payloadVersion': 1}
         payload = {'accessToken': self.accessDetails.get('access_token')}
