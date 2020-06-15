@@ -143,7 +143,7 @@ class BasePlugin:
             data = {'header': header,'payload': payload}
             response = requests.post(base_url.format("homeassistant/skill"),json=data)
             response_json = response.json()
-            if !response_json and response_json["header"]["code"] == "SUCCESS":
+            if response_json and response_json["header"]["code"] == "SUCCESS":
                 #Domoticz.Debug('Tuya state: ' + str(response_json["payload"]["data"]["state"]))
                 #Domoticz.Debug('Domoticz state: ' + str(Devices[Unit].nValue))
                 #Domoticz.Debug('State value true: ' + str(states["True"]) + ' , false: ' + str(states["False"]))
