@@ -1,5 +1,5 @@
 # domoticz-tuyacloud-plugin
-This Domoticz plugins creates a connection to the Tuya Cloud, imports devices of type 'switch' and lets you control these devices.
+This Domoticz plugins creates a connection to the Tuya Cloud, imports devices of type 'switch' or 'light' and lets you control these devices. 
 > This is a first draft and works fine for my single device. This will not work for lights or other equipment
 
 ## Prerequisites
@@ -17,5 +17,10 @@ This Domoticz plugins creates a connection to the Tuya Cloud, imports devices of
 ## Devices
 - After enabling the Hardware, the plugin will initialize the connection and will create the devices
 - Go to Devices and enable the devices you want
+- Supported devices: Power Plug (On/Off), Light (On/Off)
+
+## What's next
+- A smoke detector is in transit. Once I receive it, I will update the plugin to make it work with this device.
+- Feel free to create an issue and post the start-up logs if you have another type of device.
 
 Have fun with it!
