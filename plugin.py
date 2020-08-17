@@ -171,7 +171,7 @@ class BasePlugin:
             Devices[Unit].Update(nValue = commands[Command]["value"], sValue = str(commands[Command]["value"]))
         else:
             Domoticz.Debug("Command failed: " + commands[Command]["comm"] + ", value: " + str(commands[Command]["value"]))
-            Domoticz.Debug("Tuya error code: " + response_json['header']['code']
+            Domoticz.Debug("Tuya error code: " + response_json['header']['code'])
 
     def onConnect(self, Connection, Status, Description):
         Domoticz.Debug("onConnect called")
