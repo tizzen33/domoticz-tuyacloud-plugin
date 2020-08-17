@@ -159,7 +159,7 @@ class BasePlugin:
         Domoticz.Debug("onStop called")
 
     def onCommand(self, Unit, Command, Level, Color):
-        commands = {'On': {'comm': 'turnOnOff', 'value': 1}, 'Off': {'comm': 'turnOnOff', 'value': 0}, 'Stop': {'comm': 'startStop', 'value': 0}}
+        commands = {'On': {'comm': 'turnOnOff', 'value': '1'}, 'Off': {'comm': 'turnOnOff', 'value': '0'}, 'Stop': {'comm': 'startStop', 'value': '0'}}
         headers = {'Content-Type': 'application/json'}
         header = {'name': commands[Command]["comm"], 'namespace': 'control', 'payloadVersion': 1}
         payload = {'accessToken': self.accessDetails.get('access_token'), 'devId': Devices[Unit].DeviceID, 'value': commands[Command]["value"]}
@@ -171,6 +171,7 @@ class BasePlugin:
             Devices[Unit].Update(nValue = commands[Command]["value"], sValue = str(commands[Command]["value"]))
         else:
             Domoticz.Debug("Command failed: " + commands[Command]["comm"] + ", value: " + str(commands[Command]["value"]))
+            Domoticz.Debug("Tuya error code: " + response_json['header']['code']
 
     def onConnect(self, Connection, Status, Description):
         Domoticz.Debug("onConnect called")
