@@ -17,7 +17,7 @@ This Domoticz plugins creates a connection to the Tuya Cloud, imports devices of
 ## Devices
 - After enabling the Hardware, the plugin will initialize the connection and will create the devices
 - Go to Devices and enable the devices you want
-- Supported devices: Power Plug (On/Off), Light (On/Off/Set Brightness)
+- Supported devices: Power Plug (On/Off), Light (On/Off/Set Brightness), Cover (On/Off/Stop)
 
 ## What's next
 - Feel free to create an issue and post the start-up logs if you have other devices.
