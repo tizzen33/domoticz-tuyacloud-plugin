@@ -170,7 +170,7 @@ class BasePlugin:
             Domoticz.Debug("onCommand: " + Command + ", level (" + str(Level) + ") Color:" + Color)
             Devices[Unit].Update(nValue = commands[Command]["value"], sValue = str(commands[Command]["value"]))
         else:
-            Domoticz.Debug("Command failed: " + commands[Command]["comm"] + ", value: " + commands[Command]["value"])
+            Domoticz.Debug("Command failed: " + commands[Command]["comm"] + ", value: " + str(commands[Command]["value"]))
 
     def onConnect(self, Connection, Status, Description):
         Domoticz.Debug("onConnect called")
