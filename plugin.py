@@ -162,7 +162,7 @@ class BasePlugin:
         commands = {'On': {'comm': 'turnOnOff', 'value': 1}, 'Off': {'comm': 'turnOnOff', 'value': 0}, 'Stop': {'comm': 'startStop', 'value': 0}, 'Set Level': {'comm': 'setBrightness', 'value': Level}}
         headers = {'Content-Type': 'application/json'}
         header = {'name': commands[Command]["comm"], 'namespace': 'control', 'payloadVersion': 1}
-        payload = {'accessToken': self.accessDetails.get('access_token'), 'devId': Devices[Unit].DeviceID, 'value': commands[Command]["value"]}
+        payload = {'accessToken': self.accessDetails.get('access_token'), 'devId': Devices[Unit].DeviceID, 'value': str(commands[Command]["value"])}
         data = {'header': header,'payload': payload}
         response = requests.post(base_url.format("homeassistant/skill"),json=data)
         response_json = response.json()
@@ -170,7 +170,8 @@ class BasePlugin:
             Domoticz.Debug("onCommand: " + Command + ", level (" + str(Level) + ") Color:" + Color)
             Devices[Unit].Update(nValue = commands[Command]["value"], sValue = str(commands[Command]["value"]))
         else:
-            Domoticz.Debug("Command failed: " + commands[Command]["comm"] + ", value: " + commands[Command]["value"])
+            Domoticz.Debug("Command failed: " + commands[Command]["comm"] + ", value: " + str(commands[Command]["value"]))
+            Domoticz.Debug("Tuya error code: " + response_json['header']['code'])
 
     def onConnect(self, Connection, Status, Description):
         Domoticz.Debug("onConnect called")
