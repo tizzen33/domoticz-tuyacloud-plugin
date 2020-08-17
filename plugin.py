@@ -44,7 +44,7 @@ base_url = "https://px1.tuyaeu.com/{}"
 
 class BasePlugin:
     accessDetails = {}
-    device_types = {'switch': {'type': 'Switch','image': 1}, 'light': {'type': 'Switch','image': 0}}
+    device_types = {'switch': {'type': 'Switch','image': 1}, 'light': {'type': 'Switch','image': 0}, 'cover': {'type': 244, 'subType': 73, 'switchType': 14}}
 
     def onStart(self):
         self.debugging = Parameters["Mode2"]
@@ -108,6 +108,9 @@ class BasePlugin:
                 if (createDomoticzDevice and (tuya_device["ha_type"] == "light" or tuya_device["ha_type"] == "switch")):
                     Domoticz.Device(Name=tuya_device["name"],Unit=maxUnit+1,TypeName=self.device_types[tuya_device["ha_type"]]["type"],Image=self.device_types[tuya_device["ha_type"]]["image"],DeviceID=tuya_device["id"]).Create()
                     Domoticz.Debug('Creating a {type} device with identifier {id}'.format(type=tuya_device["ha_type"],id=tuya_device["id"]))
+				if (createDomoticzDevice and tuya_device["ha_type"] == "cover"):
+					Domoticz.Device(Name=tuya_device["name"],Unit=maxUnit+1,Type=self.device_types[tuya_device["ha_type"]]["type"],SubType=self.device_types[tuya_device["ha_type"]]["subType"],SwitchType=self.device_types[tuya_device["ha_type"]]["switchType"]).Create()
+					Domoticz.Debug('Creating a {type} device with identifier {id}'.format(type=tuya_device["ha_type"],id=tuya_device["id"]))
         else:
             Domoticz.Debug('Device synchronization failed')
         
@@ -156,7 +159,7 @@ class BasePlugin:
         Domoticz.Debug("onStop called")
 
     def onCommand(self, Unit, Command, Level, Color):
-        commands = {'On': {'comm': 'turnOnOff', 'value': 1}, 'Off': {'comm': 'turnOnOff', 'value': 0}}
+        commands = {'On': {'comm': 'turnOnOff', 'value': 1}, 'Off': {'comm': 'turnOnOff', 'value': 0}, 'Stop': {'comm': 'startStop', 'value': 0}}
         headers = {'Content-Type': 'application/json'}
         header = {'name': commands[Command]["comm"], 'namespace': 'control', 'payloadVersion': 1}
         payload = {'accessToken': self.accessDetails.get('access_token'), 'devId': Devices[Unit].DeviceID, 'value': commands[Command]["value"]}
