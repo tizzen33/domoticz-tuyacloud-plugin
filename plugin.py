@@ -10,7 +10,7 @@
         </ul>
         <h3>Devices</h3>
         <ul style="list-style-type:square">
-            <li>At the moment, only power plugs can be discovered and used.</li>
+            <li>Check the Github readme for supported device types.</li>
         </ul>
     </description>
     <params>
@@ -44,7 +44,7 @@ base_url = "https://px1.tuyaeu.com/{}"
 
 class BasePlugin:
     accessDetails = {}
-    device_types = {'switch': {'type': 'Switch','image': 1}, 'light': {'type': 'Switch','image': 0}, 'cover': {'type': 244, 'subType': 73, 'switchType': 14}}
+    device_types = {'switch': {'type': 'Switch','image': 1}, 'light': {'type': 244, 'subType': 73, 'switchType': 7}, 'cover': {'type': 244, 'subType': 73, 'switchType': 14}}
 
     def onStart(self):
         self.debugging = Parameters["Mode2"]
@@ -105,10 +105,10 @@ class BasePlugin:
                                 createDomoticzDevice = False
                                 Domoticz.Debug('Device with identifier {id} already exists.'.format(id=tuya_device["id"]))
                                 break
-                if (createDomoticzDevice and (tuya_device["ha_type"] == "light" or tuya_device["ha_type"] == "switch")):
+                if (createDomoticzDevice and tuya_device["ha_type"] == "switch"):
                     Domoticz.Device(Name=tuya_device["name"],Unit=maxUnit+1,TypeName=self.device_types[tuya_device["ha_type"]]["type"],Image=self.device_types[tuya_device["ha_type"]]["image"],DeviceID=tuya_device["id"]).Create()
                     Domoticz.Debug('Creating a {type} device with identifier {id}'.format(type=tuya_device["ha_type"],id=tuya_device["id"]))
-                if (createDomoticzDevice and tuya_device["ha_type"] == "cover"):
+                if (createDomoticzDevice and (tuya_device["ha_type"] == "light" or tuya_device["ha_type"] == "cover")):
                     Domoticz.Device(Name=tuya_device["name"],Unit=maxUnit+1,Type=self.device_types[tuya_device["ha_type"]]["type"],Subtype=self.device_types[tuya_device["ha_type"]]["subType"],Switchtype=self.device_types[tuya_device["ha_type"]]["switchType"],DeviceID=tuya_device["id"]).Create()
                     Domoticz.Debug('Creating a {type} device with identifier {id}'.format(type=tuya_device["ha_type"],id=tuya_device["id"]))
         else:
@@ -159,7 +159,7 @@ class BasePlugin:
         Domoticz.Debug("onStop called")
 
     def onCommand(self, Unit, Command, Level, Color):
-        commands = {'On': {'comm': 'turnOnOff', 'value': 1}, 'Off': {'comm': 'turnOnOff', 'value': 0}, 'Stop': {'comm': 'startStop', 'value': 0}}
+        commands = {'On': {'comm': 'turnOnOff', 'value': 1}, 'Off': {'comm': 'turnOnOff', 'value': 0}, 'Stop': {'comm': 'startStop', 'value': 0}, 'Set Level': {'comm': 'brightnessSet', 'value': Level}}
         headers = {'Content-Type': 'application/json'}
         header = {'name': commands[Command]["comm"], 'namespace': 'control', 'payloadVersion': 1}
         payload = {'accessToken': self.accessDetails.get('access_token'), 'devId': Devices[Unit].DeviceID, 'value': str(commands[Command]["value"])}
@@ -168,7 +168,8 @@ class BasePlugin:
         response_json = response.json()
         if response_json['header']['code'] == 'SUCCESS':
             Domoticz.Debug("onCommand: " + Command + ", level (" + str(Level) + ") Color:" + Color)
-            Devices[Unit].Update(nValue = commands[Command]["value"], sValue = str(commands[Command]["value"]))
+            if commands[Command]["comm"] == "turnOnOff":
+                Devices[Unit].Update(nValue = commands[Command]["value"], sValue = str(commands[Command]["value"]))
         else:
             Domoticz.Debug("Command failed: " + commands[Command]["comm"] + ", value: " + str(commands[Command]["value"]))
             Domoticz.Debug("Tuya error code: " + response_json['header']['code'])
