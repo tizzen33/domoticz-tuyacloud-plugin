@@ -168,7 +168,6 @@ class BasePlugin:
         response_json = response.json()
         if response_json['header']['code'] == 'SUCCESS':
             Domoticz.Debug("onCommand: " + Command + ", level (" + str(Level) + ") Color:" + Color)
-            Devices[Unit].Update(nValue = commands[Command]["value"], sValue = str(commands[Command]["value"]))
         else:
             Domoticz.Debug("Command failed: " + commands[Command]["comm"] + ", value: " + str(commands[Command]["value"]))
             Domoticz.Debug("Tuya error code: " + response_json['header']['code'])
