@@ -4,7 +4,7 @@ This Domoticz plugins creates a connection to the Tuya Cloud, imports devices of
 
 ## Prerequisites
 - Functioning Domoticz installation
-- Python 3 installed on your system
+- Python 3 (+ python3-dev) installed on your system
 - Python dependencies: requests
 
 ## Installation
