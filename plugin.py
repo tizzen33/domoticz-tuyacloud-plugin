@@ -150,7 +150,7 @@ class BasePlugin:
                 #Domoticz.Debug('Tuya state: ' + str(response_json["payload"]["data"]["state"]))
                 #Domoticz.Debug('Domoticz state: ' + str(Devices[Unit].nValue))
                 #Domoticz.Debug('State value true: ' + str(states["True"]) + ' , false: ' + str(states["False"]))
-                if(str(response_json["payload"]["data"]["state"] in states):
+                if(str(response_json["payload"]["data"]["state"]) in states):
                     if(Devices[Unit].nValue != states[str(response_json["payload"]["data"]["state"]).lower()]):
                         Devices[Unit].Update(nValue = states[str(response_json["payload"]["data"]["state"]).lower()], sValue = str(states[str(response_json["payload"]["data"]["state"]).lower()]))
                         Domoticz.Debug('Device ' + Devices[Unit].Name + ' status updated to ' + str(response_json["payload"]["data"]["state"]).lower())
